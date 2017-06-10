@@ -9,12 +9,14 @@ namespace MVCProject.Controllers
 {
     public class DepartmentController : Controller
     {
+        DepartmentContext db = new DepartmentContext();
         // GET: Department
         public ActionResult Index()
         {
-            DepartmentContext db=new DepartmentContext();
-            List<Department> list = db.Departments.ToList();
-            return View(list);
+
+            var listDepartments = db.Departments;
+            ViewBag.list = listDepartments;
+            return View(listDepartments);
         }
     }
 }
