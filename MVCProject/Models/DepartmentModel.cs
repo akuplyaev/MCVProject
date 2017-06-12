@@ -12,8 +12,16 @@ namespace MVCProject.Models
         [Key]
         public int DepartmentId { get; set; }
         public string DepartmentName { get; set; }       
-        public int? ParentId { get; set; }
+        public int? ParentDepartmentId { get; set; }
+        [ForeignKey("ParentDepartmentId ")]
         public  Department ParentDepartment { get; set; }
+        public ICollection<Department> ChilDepartments { get; set; } 
         public virtual ICollection<Employee> Employees { get; set; }
+        public Department()
+        {
+           ChilDepartments=new List<Department>();
+           Employees=new List<Employee>();
+        }
     }
+   
 }

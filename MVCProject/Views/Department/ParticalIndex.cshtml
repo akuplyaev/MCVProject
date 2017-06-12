@@ -1,0 +1,35 @@
+﻿@using MVCProject.Models
+@model IEnumerable<Department>
+
+@helper BuildTree(IEnumerable<Department> data, int? parentId = null)
+{
+var listDepartments = data.Where(d => d.ParentDepartmentId == parentId).OrderBy(i => i.DepartmentId);
+if (listDepartments.Any())
+{
+        <ul>
+            @foreach (var department in listDepartments)
+            {
+                <li>
+
+                    <h4>@department.DepartmentName</h4> 
+                    <details>
+                        <summary>Сотрудники</summary>
+                        @foreach (var em in department.Employees)
+                        {
+                            <div>
+                                @em.FirstMidName @em.FirstMidName
+                                @Html.ActionLink("Редактировать", "Change", "Employee", new { id = em.EmployeeId }, null)
+                                @Html.ActionLink("Удалить", "Delete", "Employee", new { id = em.EmployeeId }, null)
+                            </div>
+
+                        }
+                    </details>
+                    @Html.ActionLink("Добавить сотрудника", "Add", "Employee")
+
+                    @BuildTree(data, department.DepartmentId)
+                </li>
+            }
+        </ul>
+}
+}
+@BuildTree(Model)

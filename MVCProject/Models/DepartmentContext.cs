@@ -10,9 +10,9 @@ namespace MVCProject.Models
     {
         public DepartmentContext() : base("testDB")
         {
-           Database.SetInitializer(new DbInitializer());
+            Database.SetInitializer(new DbInitializer());
         }
-        
+
         public DbSet<Department> Departments { get; set; }
         public DbSet<Employee> Employees { get; set; }
     }
@@ -20,19 +20,73 @@ namespace MVCProject.Models
     {
         protected override void Seed(DepartmentContext db)
         {
-            Department control = new Department() {DepartmentName = "Управление"};
-            Department department1 = new Department() { DepartmentName = "Отдел1", ParentDepartment = control};
-            Department department2 = new Department() { DepartmentName = "Отдел2", ParentDepartment = control };
-            Department department3 = new Department() { DepartmentName = "Отдел3", ParentDepartment = control };
-            Department group11 = new Department() {DepartmentName = "Группа11",  ParentDepartment = department1};
-            Department group12 = new Department() { DepartmentName = "Группа12", ParentDepartment = department1 };
-            Department group13 = new Department() { DepartmentName = "Группа13", ParentDepartment = department1 };
-            Department group21 = new Department() { DepartmentName = "Группа21", ParentDepartment = department2 };
-            Department group22 = new Department() { DepartmentName = "Группа22", ParentDepartment = department2 };
-            Employee employee1 = new Employee() {Department = group11,FirstMidName = "Petr pret",LastName = "Ptrov"};
-            Employee employee2 = new Employee() {Department = control,FirstMidName = "Ivan ivanovich",LastName = "Petrov"};
-            Employee employee3 = new Employee() {Department = department1,FirstMidName = "adasd dsad ",LastName = "Иванов"};
-            db.Employees.AddRange(new List<Employee> {employee1, employee2, employee3});
+            Department control = new Department()
+            {
+                DepartmentName = "Управление",
+                Employees = new List<Employee>()
+                {
+                    new Employee() {FirstMidName = "Иван",LastName = "Иванов",Position = "Руководитель управления"}
+                }
+            };
+            Department department1 = new Department()
+            {
+                DepartmentName = "Отдел1",
+                ParentDepartment = control,
+                Employees = new List<Employee>()
+                {
+                    new Employee() {FirstMidName = "test11",LastName = "Test11",Position = "Руководитель отдела1"},
+
+                }
+            };
+            Department department2 = new Department()
+            {
+                DepartmentName = "Отдел2",
+                ParentDepartment = control,
+                Employees = new List<Employee>()
+                {
+                    new Employee() {FirstMidName = "test21",LastName = "Test21",Position = "Руководитель отдела2"},
+                    new Employee(){FirstMidName = "test22",LastName = "Test22",Position = "Заместитель руководителя отдела2"},
+                }
+            };
+            Department department3 = new Department()
+            {
+                DepartmentName = "Отдел3", ParentDepartment = control,
+                Employees = new List<Employee>()
+                {
+                    new Employee() {FirstMidName = "test31",LastName = "Test31",Position = "Руководитель отдела3"},                    
+                }
+            };
+            Department group11 = new Department()
+            {
+                DepartmentName = "Группа11",
+                ParentDepartment = department1,
+                Employees = new List<Employee>()
+                {
+                    new Employee() {FirstMidName = "test111",LastName = "Test111",Position = "руководитель группы11"},
+                    new Employee(){FirstMidName = "test112",LastName = "Test112",Position = "Еще какая-то должность"},
+                }
+            };
+            Department group12 = new Department()
+            {
+                DepartmentName = "Группа12",
+                ParentDepartment = department1,
+                Employees = new List<Employee>()
+                {
+                    new Employee() {FirstMidName = "test121",LastName = "Test121",Position = "Еще какая-то должность"},
+                    new Employee(){FirstMidName = "test121",LastName = "Test121",Position = "Еще какая-то должность"},
+                }
+            };                       
+            Department group22 = new Department()
+            {
+                DepartmentName = "Группа22",
+                ParentDepartment = department2,
+                Employees = new List<Employee>()
+
+                    {
+                        new Employee() {FirstMidName = "Test221",LastName = "Test221",Position = "Еще какая-то должность"},
+                        new Employee() {FirstMidName = "Test222",LastName = "Test222",Position = "Еще какая-то должность"}
+                    }
+            };
             db.Departments.AddRange(new List<Department>()
             {
                 control,
@@ -40,10 +94,8 @@ namespace MVCProject.Models
                 department2,
                 department3,
                 group11,
-                group12,
-                group13,
-                group21,
-                group22               
+                group12,                
+                group22
             });
             db.SaveChanges();
             base.Seed(db);
