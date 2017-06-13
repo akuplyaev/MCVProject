@@ -6,30 +6,36 @@
 var listDepartments = data.Where(d => d.ParentDepartmentId == parentId).OrderBy(i => i.DepartmentId);
 if (listDepartments.Any())
 {
+
         <ul>
             @foreach (var department in listDepartments)
             {
+
                 <li>
 
-                    <h4>@department.DepartmentName</h4> 
+                    <h4>@department.DepartmentName</h4>
+
                     <details>
                         <summary>Сотрудники</summary>
                         @foreach (var em in department.Employees)
                         {
-                            <div>
-                                @em.FirstMidName @em.FirstMidName
-                                @Html.ActionLink("Редактировать", "Change", "Employee", new { id = em.EmployeeId }, null)
-                                @Html.ActionLink("Удалить", "Delete", "Employee", new { id = em.EmployeeId }, null)
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="col-md-3">@em.FirstMidName @em.FirstMidName</div>
+                                    @Html.ActionLink("Редактировать", "ChangeEmployee", "Employee", new { employeeId = em.EmployeeId }, null)
+                                    @Html.ActionLink("Удалить", "DeleteEmployee", "Employee", new { employeeId = em.EmployeeId }, null)
+                                </div>
                             </div>
-
                         }
                     </details>
-                    @Html.ActionLink("Добавить сотрудника", "Add", "Employee")
+                    @Html.ActionLink("Добавить сотрудника", "AddEmployee", "Employee", new { departmentId = department.DepartmentId }, null)
+
 
                     @BuildTree(data, department.DepartmentId)
                 </li>
             }
         </ul>
+
 }
 }
 @BuildTree(Model)
