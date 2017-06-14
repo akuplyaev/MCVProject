@@ -4,22 +4,22 @@
 @helper BuildTree(IEnumerable<Department> data, int? parentId = null)
 {
 var listDepartments = data.Where(d => d.ParentDepartmentId == parentId).OrderBy(i => i.DepartmentId);
-if (listDepartments.Any())
-{
+    if (listDepartments.Any())
+    {
         <ul>
             @foreach (var department in listDepartments)
             {
                 <li>
                     <h4 style="display: inline;">@department.DepartmentName</h4>
-                    <a href="@Url.Action("Add", new {departmentId=department.DepartmentId})"><span class="glyphicon glyphicon-plus"></span></a>
-                    <a href="@Url.Action("Delete",new {departmentId=department.DepartmentId})"><span class="glyphicon glyphicon-remove"></span></a>
+                    <a href="@Url.Action("AddDepartment", new {departmentId=department.DepartmentId})"><span class="glyphicon glyphicon-plus"></span></a>
+                    <a href="@Url.Action("DeleteDepartment",new {departmentId=department.DepartmentId})"><span class="glyphicon glyphicon-remove"></span></a>
                     <details>
                         <summary>Сотрудники</summary>
                         @foreach (var em in department.Employees)
                         {
                             <div class="row">
                                 <div class="col-md-4">
-                                    <div class="col-md-3">@em.FirstMidName @em.FirstMidName</div>
+                                    <div class="col-md-3">@em.LastName @em.FirstMidName</div>
                                     @Html.ActionLink("Редактировать", "ChangeEmployee", "Employee", new { employeeId = em.EmployeeId }, null)
                                     @Html.ActionLink("Удалить", "DeleteEmployee", "Employee", new { employeeId = em.EmployeeId }, null)
                                 </div>
@@ -34,6 +34,6 @@ if (listDepartments.Any())
             }
         </ul>
 
-}
+    }
 }
 @BuildTree(Model)
