@@ -100,5 +100,6 @@ namespace MVCProject.Models
             db.SaveChanges();
             base.Seed(db);
         }
+        
     }
 }
