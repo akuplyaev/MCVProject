@@ -43,7 +43,7 @@ namespace MVCProject.Controllers
             db.SaveChanges();
             return RedirectToAction("Index","Department");
         }
-        public ActionResult ChangeEmployee(int employeeId)
+        public ActionResult ChangeEmployee(int? employeeId)
         {
             var employee = db.Employees.Find(employeeId);
             if (employee == null)

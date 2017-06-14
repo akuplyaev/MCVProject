@@ -6,15 +6,13 @@
 var listDepartments = data.Where(d => d.ParentDepartmentId == parentId).OrderBy(i => i.DepartmentId);
 if (listDepartments.Any())
 {
-
         <ul>
             @foreach (var department in listDepartments)
             {
-
                 <li>
-
-                    <h4>@department.DepartmentName</h4>
-
+                    <h4 style="display: inline;">@department.DepartmentName</h4>
+                    <a href="@Url.Action("Add", new {departmentId=department.DepartmentId})"><span class="glyphicon glyphicon-plus"></span></a>
+                    <a href="@Url.Action("Delete",new {departmentId=department.DepartmentId})"><span class="glyphicon glyphicon-remove"></span></a>
                     <details>
                         <summary>Сотрудники</summary>
                         @foreach (var em in department.Employees)
