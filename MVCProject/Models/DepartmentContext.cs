@@ -8,7 +8,7 @@ namespace MVCProject.Models
 {
     public class DepartmentContext : DbContext
     {
-        public DepartmentContext() : base("DepatrmentDB")
+        public DepartmentContext() : base("lexisfDB")
         {
             Database.SetInitializer(new DbInitializer());
         }
@@ -16,7 +16,7 @@ namespace MVCProject.Models
         public DbSet<Department> Departments { get; set; }
         public DbSet<Employee> Employees { get; set; }
     }
-    public class DbInitializer : DropCreateDatabaseIfModelChanges<DepartmentContext>
+    public class DbInitializer : CreateDatabaseIfNotExists<DepartmentContext>
     {
         protected override void Seed(DepartmentContext db)
         {
