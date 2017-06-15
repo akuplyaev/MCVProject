@@ -8,7 +8,7 @@ namespace MVCProject.Models
 {
     public class DepartmentContext : DbContext
     {
-        public DepartmentContext() : base("testDB")
+        public DepartmentContext() : base("DepatrmentDB")
         {
             Database.SetInitializer(new DbInitializer());
         }
